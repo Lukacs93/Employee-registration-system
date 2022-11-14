@@ -9,7 +9,8 @@ const employeeSchema = new Schema({
     middleName: String,
     position: String,
     level: String,
-    equipment: []
+    equipment: [],
+    location: []
     //equipment:{ type: [Schema.Types.ObjectId], ref: 'Equipment' }
 });
 

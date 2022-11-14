@@ -9,10 +9,13 @@ const Edit = () => {
         position: "",
         level: "",
         equipment: [],
+        location: ''
     });
 
     const params = useParams();
     const navigate = useNavigate();
+
+    const [locations, setLocations] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,7 +35,8 @@ const Edit = () => {
             return;
             }
         
-            setForm(record);
+            setForm(record[0]);
+            console.log(record)
         }
  
         fetchData();
@@ -52,6 +56,23 @@ const Edit = () => {
         });
       
         navigate("/");
+    }
+
+    useEffect(() => {
+      const getLocations = async () => {
+        const response = await fetch('http://localhost:5000/locations/')
+
+        const locations = await response.json()
+
+        setLocations(locations)
+        console.log(locations)
+      }
+
+      getLocations()
+    }, [])
+
+    const selectLocation = () => {
+
     }
 
     return (
@@ -136,13 +157,20 @@ const Edit = () => {
               <label htmlFor="positionSenior">Senior</label>
           </div>
           </div>
+          <select onChange={(e) => setForm({...form, location: e.target.value})}>
+            <option></option>
+            {locations && locations.map(location => 
+              <option value={location.city}>{location.city}</option>
+              )}
+          </select>
+
           <br />
             {/* {form && form.equipment.map(x=> <input type="checkbox">{x.name}</input>)} */}
           <div className="form-group">
             <input
               type="submit"
               value="Update Record"
-              className="btn btn-primary"
+              className="send-button"
             />
           </div>
         </form>

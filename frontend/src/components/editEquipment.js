@@ -63,7 +63,7 @@ const EditEquipment = () => {
                     <input
                     type="submit"
                     value="Update Equipment"
-                    className="btn btn-primary"
+                    className="send-button"
                     />
                 </div>
             </form>

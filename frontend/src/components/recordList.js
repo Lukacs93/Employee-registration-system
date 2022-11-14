@@ -10,6 +10,7 @@ const Record = (props) => (
       <td>{props.record.level}</td>
       {/* <td>{props.record.equipment.map(x=>x.name)}</td> */}
       <td>{props.record.equipment && props.record.equipment.map(eq=><li>{eq.name}</li>)}</td>
+      <td>{props.record.location}</td>
       <td>
         <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Edit</Link> |
         <button className="btn btn-link"
@@ -26,7 +27,6 @@ const Record = (props) => (
 const RecordList = () => {
     const [records, setRecords] = useState([]);
 
-  console.log(records)
     useEffect(() => {
         const getRecords = async () => {
           const response = await fetch(`http://localhost:5000/record/`);
@@ -39,6 +39,7 @@ const RecordList = () => {
         
           const records = await response.json();
           setRecords(records);
+          console.log(response)
         }
         
         getRecords();
@@ -64,6 +65,7 @@ const RecordList = () => {
 
     const filterByPosition = () => {
       const filteredRecord = records.filter(record => {
+
         if (filterInput.position && filterInput.level) {
           return record.position.toLowerCase().includes(filterInput.position.toLowerCase()) &&
           record.level.toLowerCase().includes(filterInput.level.toLowerCase())
@@ -192,6 +194,7 @@ const RecordList = () => {
               </th>
               <th id="level" className={header === 'level' ? order ? 'ascending' : 'descending' : ''}>Level</th>
               <th>Equipments</th>
+              <th>Location</th>
               <th>Action</th>
             </tr>
           </thead>
